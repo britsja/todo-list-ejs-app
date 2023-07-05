@@ -6,7 +6,12 @@
     <title>To Do List</title>
 </head>
 <body>
-    <h1>What day is it today!?!?!</h1>
-    <p>Today is <%= dayName %></p>    
+    <h1>TO do list</h1>
+    <% if (dayName === "Thursday") { %>
+    <p style="color:blue;"><%= dayName %> List</p>
+    <% } else { %>
+    <p style="color:red;">Wow it is the <%= dayName %> List</p>    
+    <% } %>
+    
 </body>
 </html>
