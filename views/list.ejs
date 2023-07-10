@@ -7,11 +7,20 @@
 </head>
 <body>
     <h1>TO do list</h1>
-    <% if (dayName === "Thursday") { %>
-    <p style="color:blue;"><%= dayName %> List</p>
-    <% } else { %>
-    <p style="color:red;">Wow it is the <%= dayName %> List</p>    
-    <% } %>
+    <p style="color:blue;"><%= dayName %> List</p>   
+
+    <ul>
+      <li>Buy Food</li>
+      <li>Cook Food</li>
+      <li>Eat Food</li>
+      <% itemList.forEach(element => { %>
+        <li><%= element %></li>
+      <% }); %>
+    </ul>
+    <form action="/" method="post">
+      <input type="text" name="newItem" placeholder="Add Task">
+      <button type="submit" name="submit">Add to List</button>
+    </form>
     
 </body>
 </html>
