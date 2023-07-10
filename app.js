@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const date = require(__dirname + "/date.js");
 
 const app = express();
 
@@ -16,18 +17,7 @@ app.listen(3000, function() {
 var itemList = [];
 
 app.get("/", function(req, res) {
-    var today = new Date();
-    
-    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    var d = new Date();
-    var dayName = days[d.getDay()];
-
-    if (today.getDay() === 6 || today.getDay() === 0) {
-        var weekend = "a weekend baby!"
-        res.render('list', {dayName: weekend, itemList: itemList});
-    } else {
-        res.render('list', {dayName: dayName, itemList: itemList});
-    }
+    res.render('list', {dayName: date, itemList: itemList});
 })
 
 app.get("/about", function(req, res) {
