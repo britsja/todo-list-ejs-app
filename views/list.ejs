@@ -1,26 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do List</title>
-</head>
-<body>
-    <h1>TO do list</h1>
-    <p style="color:blue;"><%= dayName %> List</p>   
+<%- include("header") -%>
 
-    <ul>
-      <li>Buy Food</li>
-      <li>Cook Food</li>
-      <li>Eat Food</li>
-      <% itemList.forEach(element => { %>
-        <li><%= element %></li>
-      <% }); %>
-    </ul>
-    <form action="/" method="post">
-      <input type="text" name="newItem" placeholder="Add Task">
-      <button type="submit" name="submit">Add to List</button>
-    </form>
+    <div class="box" id="heading">
+      <h1>TO do list</h1>
+    </div>    
+    <div class="box">
+      <p style="color:blue;"><%= dayName %> List</p>   
+        <div class="item">
+          <input type="checkbox">
+          <p>Buy Food</p>
+        </div>
+        <div class="item">
+          <input type="checkbox">
+          <p>Cook Food</p>
+        </div>
+        <div class="item">
+          <input type="checkbox">
+          <p>Eat Food</p>
+        </div>        
+        <% if (itemList.length > 0) { %>
+        <% itemList.forEach(element => { %>
+          <div class="item">
+            <input type="checkbox">
+            <p><%= element %></p>
+          </div>
+        <% }); %>
+        <% }; %>
+        <form class="item" action="/" method="post">
+          <input type="text" name="newItem" placeholder="New Item" autocomplete="off">
+          <button type="submit" name="submit">+</button>
+        </form>
+    </div>
     
-</body>
-</html>
+    <%- include("footer") -%>
+    
+    
