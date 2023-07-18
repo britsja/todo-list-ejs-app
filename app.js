@@ -41,17 +41,14 @@ app.get("/", function(req, res) {
         data.forEach(function (entry) {            
             itemList.push(entry.name);                        
         });
-        } else {
-            itemList.push("Welcome to the to do list app", "Hit the + button to add a new task", "<-- Hit this to delete a task");
-        }
         res.render('list', {dayName: date, itemList: itemList});
+        } else {
+            Tasks.insertMany([ {name: "Welcome to the to do list app"}, {name: "Hit the + button to add a new task"}, {name: "<-- Hit this to delete a task"} ]);   
+            res.redirect("/");                 
+        }
         
-    });
-
-    
-    
-    // res.render('list', {dayName: date});
-    
+        
+    });   
     
 });
 
