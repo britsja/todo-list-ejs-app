@@ -57,10 +57,13 @@ app.get("/about", function(req, res) {
 })
 
 app.post("/", function(req, res) {
-    const newItem = req.body.newItem;    
-    Tasks.create({
-        name: newItem
-    });
+    const newItem = req.body.newItem;   
+    if (newItem.length > 0) { 
+        Tasks.create({
+            name: newItem
+        });
+        res.redirect("/");
+    } else {
     res.redirect("/");
-    
+    }
 })
