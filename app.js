@@ -16,8 +16,6 @@ app.use(cors());
 
 const uri = process.env.ATLAS_URI;
 
-console.log(uri);
-
 app.listen(3000, function() {
     console.log("Listening on port 3000!")
 })
@@ -28,11 +26,34 @@ connection.once('open', () => {
     console.log('MongoDB database connection established successfully');
 })
 
-var itemList = [];
+const taskSchema = new mongoose.Schema ({
+    name: String
+})
+
+const Tasks = mongoose.model("Task", taskSchema);
 
 app.get("/", function(req, res) {
-    res.render('list', {dayName: date, itemList: itemList});
-})
+
+    const itemList = [];
+
+    Tasks.find().then((data) => {        
+        if (data.length > 0) {
+        data.forEach(function (entry) {            
+            itemList.push(entry.name);                        
+        });
+        } else {
+            itemList.push("Welcome to the to do list app", "Hit the + button to add a new task", "<-- Hit this to delete a task");
+        }
+        res.render('list', {dayName: date, itemList: itemList});
+        
+    });
+
+    
+    
+    // res.render('list', {dayName: date});
+    
+    
+});
 
 app.get("/about", function(req, res) {
     res.render("about");
@@ -40,7 +61,9 @@ app.get("/about", function(req, res) {
 
 app.post("/", function(req, res) {
     const newItem = req.body.newItem;    
-    itemList.push(newItem);    
+    Tasks.create({
+        name: newItem
+    });
     res.redirect("/");
     
 })

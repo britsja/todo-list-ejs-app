@@ -4,19 +4,7 @@
       <h1>TO do list</h1>
     </div>    
     <div class="box">
-      <p style="color:blue;"><%= dayName %> List</p>   
-        <div class="item">
-          <input type="checkbox">
-          <p>Buy Food</p>
-        </div>
-        <div class="item">
-          <input type="checkbox">
-          <p>Cook Food</p>
-        </div>
-        <div class="item">
-          <input type="checkbox">
-          <p>Eat Food</p>
-        </div>        
+      <p style="color:blue;"><%= dayName %> List</p>            
         <% if (itemList.length > 0) { %>
         <% itemList.forEach(element => { %>
           <div class="item">
