@@ -39,7 +39,7 @@ app.get("/", function(req, res) {
     Tasks.find().then((data) => {        
         if (data.length > 0) {
         data.forEach(function (entry) {            
-            itemList.push(entry.name);                        
+            itemList.push(entry);                        
         });
         res.render('list', {dayName: date, itemList: itemList});
         } else {
@@ -66,4 +66,9 @@ app.post("/", function(req, res) {
     } else {
     res.redirect("/");
     }
+})
+
+app.post("/delete", async function(req, res) {
+    await Tasks.deleteOne({_id: req.body.checkbox})
+    res.redirect("/");
 })
