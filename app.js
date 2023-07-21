@@ -5,7 +5,7 @@ require('dotenv').config({path: __dirname + '/.env'});
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
-const e = require('express');
+const _ = require('lodash');
 
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -75,14 +75,19 @@ app.post("/", async function(req, res) {
         res.redirect("/");
         }
     } else {
-        await List.find({name: listName}).then((data) => {     
-            const itemEntry = {name: newItem};            
+        try {
+          const data = await List.find({ name: listName });
+          if (data.length > 0) {
+            const itemEntry = { name: newItem };            
             data[0].items.push(itemEntry);
-            data[0].save();
-
-            res.redirect("/" + listName);
-        })  
-    }
+            await data[0].save();
+          }
+          res.redirect("/" + listName);
+        } catch (error) {
+          console.error(error);
+          res.status(500).send("An error occurred");
+        }
+      }
 })
 
 app.post("/delete", async function(req, res) {
@@ -97,8 +102,11 @@ app.post("/delete", async function(req, res) {
         await List.findOneAndUpdate(
           { name: listName },
           { $pull: { items: { _id: listItemId } } }
-        ).exec();
-        res.redirect("/" + listName);
+        ).exec()
+        .then(() => {
+            res.redirect("/" + listName);
+        })
+        
       } catch (error) {
         console.error(error);
         res.status(500).send("An error occurred");
@@ -110,7 +118,7 @@ app.post("/delete", async function(req, res) {
 
 app.get("/:pageId", function(req, res) {
     if (req.params.pageId != "favicon.ico") {
-      customListName = req.params.pageId;
+      customListName = _.capitalize(req.params.pageId);
 
       const itemList = [];
 
